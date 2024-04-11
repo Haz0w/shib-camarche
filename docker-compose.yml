@@ -1,0 +1,21 @@
+services:
+  shib:
+    container_name: shibboleth
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - HOSTNAME=localhost
+        - SP_ENTITY_ID=https://shib.agautreau.com/shibboleth
+        - IDP_ENTITY_ID=http://idp.localhost/shibboleth
+        - SSL=true
+        - METADATA_FILE=preview-all-renater-test-metadata.xml
+        - METADATA_URL=https://pub.federation.renater.fr/metadata/test/preview/preview-all-renater-test-metadata.xml
+    # volumes:
+      # - ./shibboleth/shibboleth2.xml:/etc/shibboleth/shibboleth2.xml
+      # - ./conf/httpd.conf:/etc/httpd/conf/httpd.conf
+    environment:
+      - LD_LIBRARY_PATH=/opt/shibboleth/lib64
+    ports:
+      - "8443:443"
+      - "8080:80"
